@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register Page</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans|Karla|Alata" rel="stylesheet">
+</head>
+
+<style type="text/css">
+	body{
+		font-family: 'Open Sans'
+	}
+	.mynav{
+		position: relative;
+		z-index: 99;
+	}
+	:focus {
+	    border: none;
+	    outline: none;
+	}
+	.mynav h5 {
+    font-family: "Josefin sans";
+    font-size: 30px;
+    font-weight: 600;
+}
+.jumbotron {
+    min-height: 90vh;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.registerbox{
+	max-width: 400px;
+	background: #fff;
+	padding: 30px;
+	border-radius: 5px;
+	box-shadow: 0 0 20px -3px rgba(0,0,0,0.3);
+	margin:0 auto;
+	position: relative;
+}
+.registerbox:before {
+    content: '';
+    display: block;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    background: linear-gradient(35deg, #FC5C7D, #6A82FB);
+    border-radius: 50px 120px;
+    transform: rotate(85deg);
+    z-index: -1;
+    top: -40px;
+    left: -100px;
+}
+.registerbox:after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background: linear-gradient(45deg, #8f94fb, #4e54c8);
+    border-radius: 500px;
+    transform: rotate(85deg);
+    z-index: -1;
+    bottom: : -40px;
+    right: -20px;
+}
+.registerbox h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+.registerform{
+	display: flex;
+	flex-direction: column;
+}
+.registerform input{
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.registerform .register {
+    background: linear-gradient(-30deg, #8E2DE2, #4A00E0);
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 20px;
+    padding: 10px;
+}
+.registerform input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+}
+.registerform p {
+    margin-bottom: 0;
+    margin-top: 30px;
+    font-size: 15px;
+    color: #6b6b6b;
+}
+.registerform .row input {
+    padding: 10px;
+    width: 100%;
+}
+.btn-success {
+    margin-bottom: 30px;
+}
+</style>
+<body>
+
+	<!-- top navigation -->
+	<div class="mynav d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom shadow-sm">
+      <h5 class="my-0 mr-md-auto">ResumeAI</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/">Home</a>
+        <a class="p-2 text-dark" href="/accounts/login">Login</a>
+        <a class="p-2 text-dark" href="/accounts/register">Register</a>
+      </nav>
+    </div>
+
+
+    <!-- resgiter Page -->
+
+    <div class="jumbotron">
+    	<div class="container">
+    		<div class="registerbox">
+    			<h2>Get Listed On Our Platform!</h2>
+                 <div>
+                    {% for message in messages %}
+                    <h3 style="color: red"> {{ message }} </h3>
+                    {% endfor %}
+                </div>
+    			<form class="registerform" action="register" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Enter Full Name">
+    				<input type="email" name="email" placeholder="Enter Email">
+
+                    <!-- skill options -->
+                    <div class="row">
+
+                        <div class="col-12">
+                            <input type="text" name="skill1" placeholder="Enter Your Skill">
+                        </div>
+                        <div class="col-6">
+                            <a class="btn btn-success text-white add-skill">Add Another Skill</a>
+                        </div>
+                    
+                    </div>
+                   
+{#                    <input type="number" name="experience" placeholder="Enter Year Of Experience Ex. 2, 3">#}
+    				<input type="password" name="password" placeholder="Enter password">
+                    <input type="password" name="confirm_password" placeholder="Enter password again">
+    				<button type="submit" class="btn register">Register</button>
+    				<p>Already Registered? <u><a href='/accounts/login'>Login Here</a></u></p>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+    
+
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+    var count = 2;
+    $(document).on('click', '.add-skill' , function(){
+        $(this).parent().before('<div class="col-12"> <input type="text" name="skill'+ count +'" placeholder="Enter Your Skill"> </div>');
+        count+=1;
+    });
+
+</script>
+
+
+</html>

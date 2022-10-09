@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Homepage</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans|Karla|Alata" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<style type="text/css">
+	.mynav{
+		position: relative;
+		z-index: 99;
+	}
+	:focus {
+	    border: none;
+	    outline: none;
+	}
+	.mynav h5 {
+    font-family: "Josefin sans";
+    font-size: 30px;
+    font-weight: 600;
+}
+	.jumbotron{
+
+	    border-radius: 0;
+	    padding: 0;
+	    margin-bottom: 0;
+	}
+	.search-section{
+		background: url({% static 'img/bg.jpg' %});
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	}
+	.bg-img:before {
+    content: '';
+    background: black;
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;
+    opacity: 0.7;
+    z-index: 1;
+}
+	.bg-img{
+	    min-height: 90vh;
+	    display: flex;
+        align-items: center;
+	}
+	.container{
+		position: relative;
+		z-index: 99;
+		margin-top: -100px;
+	}
+	.main-head h1 {
+    text-align: center;
+    color: #fff;
+    font-family: 'Josefin Sans';
+    font-weight: 900;
+    font-size: 50px;
+}
+.main-head p {
+    font-size: 18px;
+    text-align: justify;
+    color: #fff;
+    font-family: "open sans";
+	max-width: 70%;
+	display: block;
+    margin: 0 auto;
+}
+.job-search {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 70px;
+}
+.job-search input {
+    padding: 15px 20px;
+    background-color: #fff;
+    color: #000;
+    border:none;
+    width: 70%;
+    border-radius: 50px 0 0 50px;
+}
+.select-option {
+    border: none;
+    width: 15%;
+}
+.search-btn{
+	padding: 0 30px;
+	border-radius: 0 50px 50px 0;
+	border:none;
+	font-size: 17px;
+}
+</style>
+<body>
+
+	<!-- top navigation -->
+	<div class="mynav d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom shadow-sm">
+      <h5 class="my-0 mr-md-auto">ResumeAI</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/">Home</a>
+        <a class="p-2 text-dark" href="/accounts/login">Login</a>
+        <a class="p-2 text-dark" href="/accounts/register">Register</a>
+      </nav>
+    </div>
+
+    <div class="jumbotron search-section">
+    	<div class="bg-img">
+	    	<div class="container">
+
+	    		<!-- top heading and para -->
+	    		<div class="main-head">
+	    			<h1>Hire Perfect Employee In Seconds</h1>
+{#	    			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus, lectus ut ultricies viverra, ex urna ullamcorper mauris, vitae scelerisque nunc neque a leo. Vestibulum venenatis tincidunt ullamcorper.</p>#}
+	    		</div>
+
+
+	    		<!-- search form -->
+	    		<form action="/result" method="POST" class="job-search">
+                    {% csrf_token %}
+	    		  <input type="text" name="search" list="Posts" placeholder="Enter Your Job Requirement">
+                    <datalist id="Posts">
+                        {% for post in posts %}
+                        <option value="">{{ post }}</option>
+                        {% endfor %}
+                    </datalist>
+	    		  <select name="job-options" class="select-option">
+	    		  	<option value="Post">Post</option>
+	    		  	<option value="Category">Category</option>
+	    		  </select>
+	    		  <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+	    		</form>
+
+
+	    	</div>
+	    </div>
+    </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+
+</html>

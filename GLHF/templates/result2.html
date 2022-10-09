@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search Results</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans|Karla|Alata" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<style type="text/css">
+	body{
+		font-family: 'Open Sans'
+	}
+	.mynav{
+		position: relative;
+		z-index: 99;
+	}
+	:focus {
+	    border: none;
+	    outline: none;
+	}
+	.mynav h5 {
+    font-family: "Josefin sans";
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.job-search {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.job-search input {
+    padding: 15px 20px;
+    background-color: #fff;
+    color: #000;
+    border:none;
+    width: 70%;
+    border-radius: 50px 0 0 50px;
+}
+.select-option {
+    border: none;
+    width: 15%;
+}
+.search-btn{
+	background: #ccc;
+	padding: 0 30px;
+	border-radius: 0 50px 50px 0;
+	border:none;
+	font-size: 17px;
+}
+
+.col-md-4{
+	display: flex;
+}
+.filter-box{
+	border-right: 1px solid #ccc;
+}
+.filter-box h4{
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+.filter-box input[type=checkbox] {
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+.user-box{
+	padding: 20px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 20px -5px rgba(0,0,0,0.5);
+	margin-bottom: 30px;
+	position: relative;
+	transition: 0.3s;
+}
+.user-box:hover{
+	box-shadow: 0 0 20px 0px rgba(0,0,0,0.5);
+	transition: 0.3s;
+}
+.user-box img{
+	max-width: 100px;
+	border-radius: 100px;
+	margin: 0 auto;
+	display: block;
+}
+.user-box h2{
+	font-size: 18px;
+	font-family: 'Josefin Sans';
+	font-weight: 600;
+	text-align: center;
+	margin-top: 10px;
+	color: #4a4747;
+}
+.user-box p {
+    color: #676767;
+    font-size: 15px;
+    font-family: 'Open sans';
+}
+.btn-holder {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+}
+.user-box .btn{
+	display: block;
+	width: 100%;
+}
+</style>
+
+
+	<!-- top navigation -->
+	<div class="mynav d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom shadow-sm">
+      <h5 class="my-0 mr-md-auto">MyJob Portal</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Home</a>
+        <a class="p-2 text-dark" href="#">Login</a>
+        <a class="p-2 text-dark" href="#">Register</a>
+      </nav>
+    </div>
+
+
+    <div class="jumbotron">
+    	<div class="container">
+
+    		{% comment %}<!-- top search form -->
+    		<form action="#" class="job-search">
+    		  <input type="text" name="search" placeholder="Enter Your Job Requirement">
+    		  <select name="job-options" class="select-option">
+    		  	<option value="one">Post</option>
+    		  	<option value="two">Option Two</option>
+    		  </select>
+    		  <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+    		</form>{% endcomment %}
+
+    		<div class="row">
+    			<div class="col-md-3 filter-box">
+    				<h4>Fitler Results</h4>
+    				<form action="/result/filter" method="POST">
+                    {% csrf_token %}
+                        {% for cat in categories %}
+    				  <input type="checkbox" {% if cat in myList %}checked{% endif %} name="{{cat}}">{{ cat }}<br>
+                        {% endfor %}
+                        <center>
+                            <button type="submit" class="btn btn-success mt-3">Submit</button>
+                        </center>
+    				</form>
+    			</div>
+    			<div class="col-md-9">
+    				<div class="row">
+                        {% for profile in profiles %}
+    					<div class="col-md-4">
+    						<div class="user-box" style="min-width: 186px;word-break: break-word;">
+                                    <img src="{% static 'img/user.jpg' %}">
+    							<h2>{{ profile.name }}</h2>
+    							<p style="height: 90px"><b>Skill Set : </b>{{ profile.cSkills }}</p>
+    							<div class="btn-holder" style="margin-top: 50px">
+                                    <a href="mailto:{{ profile.email }}"><button class="btn btn-success"><i class="fa fa-envelope" aria-hidden="true"></i> Email Now</button></a>
+    							</div>
+    						</div>
+    					</div>
+                        {% endfor %}
+    				</div>
+    			</div>
+    		</div>
+
+        <nav aria-label="..." style="margin-left: 290px;">
+  <ul class="pagination justify-content-center">
+      {% if profiles.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ profiles.previous_page_number }}&search=Category" tabindex="-1" style="color: #218838"><</a>
+    </li>
+      {% endif %}
+    <li class="page-item active">
+      <a class="page-link" href="#" style="background-color: #218838">{{ profiles.number }} <span class="sr-only">(current)</span></a>
+    </li>
+  {% if profiles.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ profiles.next_page_number }}&search=Category" style="color: #218838">></a>
+
+    </li>
+   {% endif %}
+  </ul>
+</nav>
+    	</div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</html>
